@@ -1,3 +1,6 @@
+#profe mandé un chat de blackbox donde ya habían chateado con la IA :(
+#revisa el final del chat 
+
 import os
 dict_orders = {}
 
