@@ -1,0 +1,130 @@
+import os
+dict_orders = {}
+
+def f_clean():
+    os.system('cls')
+    print('=======: RESTAURANT MENU ORDER :========\nBy: Menesex\nPlease read and follow the instructions\n========================================\n\n')
+
+def f_order():
+    global sw1 
+    while True:
+        f_clean()
+        print('====: < ORDER MENU > :====\n')
+        op2 = int(input('\n\n[0] Back to principal menu\n[1] Coca-cola\n[2] Hamburger\n[3] Pizza\n[4] Hot-Dog\n--> '))
+        if op2 >= 0 and op2 <= 4:
+            break
+            
+    tableN = input('Digit the table number: ')
+    quantity = input('Quantity? ')
+
+    #create the key for the table in the dict
+    if tableN not in dict_orders:
+        dict_orders[tableN] = []
+
+    #add the order
+    if op2 == 0:
+        sw1 = False
+    elif op2 == 1:
+        dict_orders[tableN].append(f'[{quantity}] Coca-cola')
+    elif op2 == 2:
+        dict_orders[tableN].append(f'[{quantity}] Hamburger')
+    elif op2 == 3:
+        dict_orders[tableN].append(f'[{quantity}] Pizza')
+    elif op2 == 4:
+        dict_orders[tableN].append(f'[{quantity}] Hot-Dog')
+
+def f_query():
+    while True:
+        f_clean()
+        option = int(input('====: CONSULT MENU :====\n[0] Back to main menu\n[1] Consult all orders\n[2] Consult by table\n---> '))
+        if option == 0:
+            break
+        elif option == 1:
+            f_clean()
+            print('====: ALL ORDERS :====')
+            for table, orders in dict_orders.items():
+                print(f'Table {table}: {orders}')
+            input('<ENTER>')
+        elif option == 2:
+            f_clean()
+            print('====: ORDERS BY TABLE NUMBER :====')
+            tableN = input('Enter table number: ')
+            if tableN in dict_orders:
+                print(f'Table {tableN}: {dict_orders[tableN]}')
+            else:
+                print(f'No orders found for table {tableN}.')
+            input('<ENTER>')
+
+def f_modify():
+    f_clean()
+    tableN = input('Enter the table number to modify: ')
+    
+    if tableN in dict_orders:
+        print(f'Current orders for table {tableN}: {dict_orders[tableN]}')
+        #index to modify the specific order from the dict
+        index = int(input('Enter the order number to modify (1, 2, 3, ...): ')) - 1 #(-1 for iterate all the index from 'dict_orders')
+        
+        #Modify the order if the index exist
+        if 0 <= index < len(dict_orders[tableN]):
+            new_quantity = input('Enter new quantity: ')
+            
+            # Get the existing item without the quantity
+            existing_order = dict_orders[tableN][index]
+            item_start = existing_order.find(' ') + 1
+            item_name = existing_order[item_start:]
+
+            # Keep the item content the same and update the quantity
+            dict_orders[tableN][index] = f'[{new_quantity}] {item_name}'
+        else:
+            print('Invalid order number.')
+            
+    else:
+        print(f'No orders found for table {tableN}.')
+    input('<ENTER>')
+
+def f_delete():
+    f_clean()
+    tableN = input('Enter the table number to delete an order from: ')
+    
+    if tableN in dict_orders:
+        print(f'Current orders for table {tableN}: {dict_orders[tableN]}')
+        #index to delete the specific order from the dict
+        index = int(input('Enter the order number to delete (1, 2, 3, ...): ')) - 1 #(-1 for iterate all the index from 'dict_orders')
+        
+        #delete the order if the index exist
+        if 0 <= index < len(dict_orders[tableN]):
+            del dict_orders[tableN][index]
+            
+            #if the new orders are empty, delete the table from the dict
+            if not dict_orders[tableN]:
+                del dict_orders[tableN]
+            print('Order deleted.')
+        else:
+            print('Invalid order number.')
+            
+    else:
+        print(f'No orders found for table {tableN}.')
+    input('<ENTER>')
+
+def f_selector(op):
+    global sw1
+    if op == 0:
+        sw1 = False
+    elif op == 1:
+        f_order()
+    elif op == 2:
+        f_query()
+    elif op == 3:
+        f_modify()
+    elif op == 4:
+        f_delete()
+
+#----------------------------------------------------------------------------------------------------
+sw1 = True
+while sw1:
+    while True:
+        f_clean()
+        op = int(input('====: <<< PRINCIPAL MENU >>> :====\n[0] Exit\n[1] Order menu\n[2] Query the orders\n[3] Modify an order\n[4] Delete an order\n--> '))
+        if 0 <= op <= 4:
+            f_selector(op)
+            break
