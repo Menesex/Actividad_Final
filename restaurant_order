@@ -28,7 +28,7 @@ def f_order():
                     break
                 except ValueError as e:
                     print(e)
-
+            tableN = str(tableN)
             order = input('Write your order here --> ')
 
             while True:
@@ -72,31 +72,36 @@ def f_query():
             input('<ENTER>')
 
 def f_modify():
-    f_clean()
-    tableN = input('Enter the table number to modify: ')
-    
-    if tableN in dict_orders:
-        print(f'Current orders for table {tableN}: {dict_orders[tableN]}')
-        #index to modify the specific order from the dict
-        index = int(input('Digit the order number to modify ([1]-[2]-[3]...) --> ')) - 1 #(-1 for iterate all the index from 'dict_orders')
-        
-        #Modify the order if the index exist
-        if 0 <= index < len(dict_orders[tableN]):
-            new_quantity = input('Enter new quantity: ')
-            
-            # Get the existing item without the quantity
-            existing_order = dict_orders[tableN][index]
-            item_start = existing_order.find(' ') + 1
-            item_name = existing_order[item_start:]
-
-            # Keep the item content the same and update the quantity
-            dict_orders[tableN][index] = f'[{new_quantity}] {item_name}'
+    while(True):
+        f_clean()
+        op3 = int(input('====: 🔎 MODIFY MENU 🔎 :====\n🔴 Back to main menu[0]\n[1] Modify a table 🔎\n---> '))
+        if op3 == 0:
+            break
         else:
-            print('⚠️ Invalid order number ⚠️.')
+            tableN = input('Enter the table number to modify: ')
             
-    else:
-        print(f'⚠️ No orders found for table {tableN}. ⚠️')
-    input('<ENTER>')
+            if tableN in dict_orders:
+                print(f'Current orders for table {tableN}: {dict_orders[tableN]}')
+                #index to modify the specific order from the dict
+                index = int(input('Digit the order number to modify ([1]-[2]-[3]...) --> ')) - 1 #(-1 for iterate all the index from 'dict_orders')
+                
+                #Modify the order if the index exist
+                if 0 <= index < len(dict_orders[tableN]):
+                    new_quantity = input('Enter new quantity: ')
+                    
+                    # Get the existing item without the quantity
+                    existing_order = dict_orders[tableN][index]
+                    item_start = existing_order.find(' ') + 1
+                    item_name = existing_order[item_start:]
+
+                    # Keep the item content the same and update the quantity
+                    dict_orders[tableN][index] = f'[{new_quantity}] {item_name}'
+                else:
+                    print('⚠️ Invalid order number ⚠️.')
+                    
+            else:
+                print(f'⚠️ No orders found for table {tableN}. ⚠️')
+            input('<ENTER>')
 
 def f_delete():
     
@@ -111,9 +116,10 @@ def f_delete():
             tableN = input('Enter the table number to delete an order from: ')
             if tableN in dict_orders:
                 #delete the order if the index exist
-                del dict_orders[tableN]
                 print('Table deleted.')
                 print(f'Orders deleteds for table {tableN}: {dict_orders[tableN]}')
+                del dict_orders[tableN]
+                
             else:
                 print(f'Table {tableN} not found.')
             input('<ENTER>')
