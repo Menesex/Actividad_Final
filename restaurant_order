@@ -9,23 +9,24 @@ def f_clean():
     print('=======: 🍽️  RESTAURANT MENU ORDER 🍽️  :========\nBy: Menesex\nPlease read and follow the instructions\n===========================================\n\n')
 
 def f_order():
-    global sw1 
-    f_clean()
-    print('====: 🛎️  < ORDER MENU > 🛎️  :====\n')
-    op2 = int(input('🔴 Back to principal menu[0]\n[1] 🟢 Add an order 🟢\n--> '))    
-    if op2 == 0:
-        sw1 = False
-    elif op2 == 1:
-        #add the order
-        tableN = input('Digit the table number --> ')
-        order = input('Write your order here --> ')
-        quantity = input('Quantity? --> ')
-        if tableN not in dict_orders:
-            dict_orders[tableN] = [f'[{quantity}] {order}']
+    
+    while True:
+        f_clean()
+        print('====: 🛎️  < ORDER MENU > 🛎️  :====\n')
+        op2 = int(input('🔴 Back to principal menu[0]\n[1] 🟢 Add an order 🟢\n--> '))    
+        if op2 == 0:
+            break
         elif op2 == 1:
-            dict_orders[tableN].append(f'[{quantity}] {order}')
-    else:
-        input('Invalid option <ENTER>')
+            #add the order
+            tableN = input('Digit the table number --> ')
+            order = input('Write your order here --> ')
+            quantity = input('Quantity? --> ')
+            if tableN not in dict_orders:
+                dict_orders[tableN] = [f'[{quantity}] {order}']
+            elif op2 == 1:
+                dict_orders[tableN].append(f'[{quantity}] {order}')
+        else:
+            input('Invalid option <ENTER>')
 
 def f_query():
     while True:
