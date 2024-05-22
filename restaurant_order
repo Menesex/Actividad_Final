@@ -18,9 +18,30 @@ def f_order():
             break
         elif op2 == 1:
             #add the order
-            tableN = input('Digit the table number --> ')
+            #--------------VALIDATION OF DATA STARTS------------------------
+            while True:
+                try:
+                    tableN = input('Digit the table number --> ')
+                    tableN = int(tableN)
+                    if tableN <= 0:
+                        raise ValueError("The table number must be a positive integer.")
+                    break
+                except ValueError as e:
+                    print(e)
+
             order = input('Write your order here --> ')
-            quantity = input('Quantity? --> ')
+
+            while True:
+                try:
+                    quantity = input('Quantity? --> ')
+                    quantity = int(quantity)
+                    if quantity <= 0:
+                        raise ValueError("The quantity must be a positive integer.")
+                    break
+                except ValueError as e:
+                    print(e)
+            #--------------VALIDATION OF DATA ENDS------------------------
+            
             if tableN not in dict_orders:
                 dict_orders[tableN] = [f'[{quantity}] {order}']
             elif op2 == 1:
