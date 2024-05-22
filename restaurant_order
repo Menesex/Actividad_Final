@@ -58,8 +58,11 @@ def f_query():
         elif option == 1:
             f_clean()
             print('====: 📚 ALL ORDERS 📚 :====')
-            for table, orders in dict_orders.items():
-                print(f'Table {table}: {orders}')
+            if dict_orders:
+                for table, orders in dict_orders.items():
+                    print(f'Table {table}: {orders}')
+            else:
+                print('No tables found')
             input('<ENTER>')
         elif option == 2:
             f_clean()
